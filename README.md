@@ -8,9 +8,30 @@
 ### 安装
 > npm install jollychic-iview
 
-###### jollychic-iview的代码基于iview@2.12.0 在上面修改了部分源码,仅限内部使用.
+### 简介
+jollychic-iview的代码基于iview@2.12.0,在上面修改了部分源码,仅限内部使用.
 
-### 查看API文档请去 [iview](https://github.com/iview/iview) 官网 
+### 修改内容
+- 1.修改menu.vue组件,updateOpenKeys方法,将names赋值变更.
+
+``` javascript
+	//let names = [...this.openedNames];
+	let names = this.openedNames;
+```
+
+### 使用
+- 同官方保持一致
+- 引入
+
+``` javascript
+	import Vue from 'vue';
+	import iView from 'jollychic-iview';
+	Vue.use(iView);
+```
+
+------
+### 以下是官方[iview](https://github.com/iview/iview) 的命令
+###### 查看API文档请去 [iview](https://github.com/iview/iview) 官网 
 
 ###### 查看iview版本
 > npm ls iview
@@ -18,4 +39,4 @@
 ###### 安装iview指定版本的命令
 > npm install iview@2.12.0
 
-##### iview本身是依赖vue@^2.5.2
+###### iview本身是依赖vue@^2.5.2
