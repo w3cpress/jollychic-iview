@@ -18640,8 +18640,13 @@ exports.default = {
                 this.$nextTick(function () {
                     (0, _newArrowCheck3.default)(this, _this5);
 
-                    this.headerWidth = this.$refs.header.childNodes[0].offsetWidth;
-                    this.headerHeight = this.$refs.header.childNodes[0].offsetHeight;
+                    // this.headerWidth = this.$refs.header.childNodes[0].offsetWidth;
+                    // this.headerHeight = this.$refs.header.childNodes[0].offsetHeight;
+					// barry update 20180910
+					if (this.showHeader) {
+						this.headerWidth = this.$refs.header.childNodes[0].offsetWidth;
+						this.headerHeight = this.$refs.header.childNodes[0].offsetHeight;
+					}
                     if (!this.$refs.tbody) {
                         this.showVerticalScrollBar = false;
                         return;
