@@ -6,7 +6,7 @@
 [![NPM downloads](https://img.shields.io/npm/dt/jollychic-iview.svg?style=flat-square)](https://npmjs.org/package/jollychic-iview)
 
 ### 安装
-> npm install jollychic-iview
+> npm install jollychic-iview@1.0.7
 
 ### 简介
 jollychic-iview的代码基于iview@2.12.0,在上面修改了部分源码,仅限内部使用.
