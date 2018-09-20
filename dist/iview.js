@@ -16914,8 +16914,9 @@ exports.default = {
         },
         updateOpenKeys: function updateOpenKeys(name) {
             var _this = this;
-
-            var names = [].concat((0, _toConsumableArray3.default)(this.openedNames));
+			// barry fixes
+            // var names = [].concat((0, _toConsumableArray3.default)(this.openedNames));
+			var names = this.openedNames;
             var index = names.indexOf(name);
             if (this.accordion) (0, _assist.findComponentsDownward)(this, 'Submenu').forEach(function (item) {
                 (0, _newArrowCheck3.default)(this, _this);

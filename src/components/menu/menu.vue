@@ -77,7 +77,9 @@
                 this.broadcast('MenuItem', 'on-update-active-name', this.currentActiveName);
             },
             updateOpenKeys (name) {
-                let names = [...this.openedNames];
+            	// barry fixes
+                // let names = [...this.openedNames];
+				let names = this.openedNames;
                 const index = names.indexOf(name);
                 if (this.accordion) findComponentsDownward(this, 'Submenu').forEach(item => {
                     item.opened = false;
