@@ -1,6 +1,6 @@
 {
   "name": "jollychic-iview",
-  "version": "1.1.1",
+  "version": "1.1.2",
   "description": "async iview@2.14.3",
   "scripts": {
     "test": "test"
@@ -19,7 +19,7 @@
     "url": "https://github.com/w3cpress/jollychic-iview"
   },
   "devDependencies": {
-    "iview": "2.12.0"
+    "iview": "2.14.3"
   },
   "files": [
     "dist",
