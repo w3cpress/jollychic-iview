@@ -2,7 +2,7 @@
     <ul :class="classes" :style="styles"><slot></slot></ul>
 </template>
 <script>
-    import { oneOf, findComponentsDownward, findComponentsUpward } from '../../utils/assist';
+    import { oneOf, findComponentsDownward, findBrothersComponents } from '../../utils/assist';
     import Emitter from '../../mixins/emitter';
 
     const prefixCls = 'ivu-menu';
@@ -77,48 +77,26 @@
                 this.broadcast('MenuItem', 'on-update-active-name', this.currentActiveName);
             },
             updateOpenKeys (name) {
-            	// barry fixes
                 // let names = [...this.openedNames];
 				let names = this.openedNames;
                 const index = names.indexOf(name);
-                if (this.accordion) findComponentsDownward(this, 'Submenu').forEach(item => {
-                    item.opened = false;
-                });
                 if (index >= 0) {
-                    let currentSubmenu = null;
-                    findComponentsDownward(this, 'Submenu').forEach(item => {
-                        if (item.name === name) {
-                            currentSubmenu = item;
-                            item.opened = false;
-                        }
-                    });
-                    findComponentsUpward(currentSubmenu, 'Submenu').forEach(item => {
-                        item.opened = true;
-                    });
-                    findComponentsDownward(currentSubmenu, 'Submenu').forEach(item => {
-                        item.opened = false;
-                    });
+                    names.splice(index, 1);
                 } else {
                     if (this.accordion) {
                         let currentSubmenu = null;
                         findComponentsDownward(this, 'Submenu').forEach(item => {
-                            if (item.name === name) {
-                                currentSubmenu = item;
-                                item.opened = true;
-                            }
+                            if (item.name === name) currentSubmenu = item;
                         });
-                        findComponentsUpward(currentSubmenu, 'Submenu').forEach(item => {
-                            item.opened = true;
+                        findBrothersComponents(currentSubmenu, 'Submenu').forEach(item => {
+                            let i = names.indexOf(item.name);
+                            if (i >= 0) names.splice(i, 1);
                         });
-                    } else {
-                        findComponentsDownward(this, 'Submenu').forEach(item => {
-                            if (item.name === name) item.opened = true;
-                        });
+                        names.push(name);
                     }
                 }
-                let openedNames = findComponentsDownward(this, 'Submenu').filter(item => item.opened).map(item => item.name);
-                this.openedNames = [...openedNames];
-                this.$emit('on-open-change', openedNames);
+                this.openedNames = names;
+                this.$emit('on-open-change', this.openedNames);
             },
             updateOpened () {
                 const items = findComponentsDownward(this, 'Submenu');

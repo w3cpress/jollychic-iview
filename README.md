@@ -21,7 +21,8 @@ jollychic-iview的代码基于iview@2.12.0,在上面修改了部分源码,仅限
 
 -### 2.在1.0.7中修改table.vue组件,修复 Table 在 2.12.0 版本，设置 show-header="false" 报错的 bug.
 
-> npm install jollychic-iview@1.1.0   同步iview@2.14.3
+> npm install jollychic-iview@1.1.2   同步iview@2.14.3  
+> npm install jollychic-iview@1.2.0   同步iview@2.13.1
 ### 使用
 - 同官方保持一致
 - 引入

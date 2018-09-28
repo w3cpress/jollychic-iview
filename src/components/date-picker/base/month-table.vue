@@ -38,16 +38,14 @@
 
                 const tableYear = this.tableDate.getFullYear();
                 const selectedDays = this.dates.filter(Boolean).map(date => clearHours(new Date(date.getFullYear(), date.getMonth(), 1)));
-                const focusedDate = clearHours(new Date(this.focusedDate.getFullYear(), this.focusedDate.getMonth(), 1));
 
                 for (let i = 0; i < 12; i++) {
                     const cell = deepCopy(cell_tmpl);
                     cell.date = new Date(tableYear, i, 1);
                     cell.text = this.tCell(i + 1);
-                    const day = clearHours(cell.date);
+                    const time = clearHours(cell.date);
                     cell.disabled = typeof this.disabledDate === 'function' && this.disabledDate(cell.date) && this.selectionMode === 'month';
-                    cell.selected = selectedDays.includes(day);
-                    cell.focused = day === focusedDate;
+                    cell.selected = selectedDays.includes(time);
                     cells.push(cell);
                 }
 
@@ -61,7 +59,6 @@
                     {
                         [`${prefixCls}-cell-selected`]: cell.selected,
                         [`${prefixCls}-cell-disabled`]: cell.disabled,
-                        [`${prefixCls}-cell-focused`]: cell.focused,
                         [`${prefixCls}-cell-range`]: cell.range && !cell.start && !cell.end
                     }
                 ];

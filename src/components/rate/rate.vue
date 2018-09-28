@@ -45,10 +45,6 @@
             },
             name: {
                 type: String
-            },
-            clearable: {
-                type: Boolean,
-                default: false
             }
         },
         data () {
@@ -127,13 +123,8 @@
             },
             handleClick (value) {
                 if (this.disabled) return;
-                //value++;
+//                 value++;
                 if (this.isHalf) value -= 0.5;
-
-                if(this.clearable && Math.abs(value - this.currentValue) < 0.01) {
-                    value = 0;
-                }
-
                 this.currentValue = value;
                 this.$emit('input', value);
                 this.$emit('on-change', value);

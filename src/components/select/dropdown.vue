@@ -49,7 +49,7 @@
                                     gpuAcceleration: false
                                 },
                                 preventOverflow :{
-                                    boundariesElement: 'window'
+                                    boundariesElement: 'viewport'
                                 }
                             },
                             onCreate:()=>{
@@ -79,9 +79,6 @@
                 }
             },
             resetTransformOrigin() {
-                // 不判断，Select 会报错，不知道为什么
-                if (!this.popper) return;
-
                 let x_placement = this.popper.popper.getAttribute('x-placement');
                 let placementStart = x_placement.split('-')[0];
                 let placementEnd = x_placement.split('-')[1];

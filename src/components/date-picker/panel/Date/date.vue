@@ -39,8 +39,6 @@
                     :value="dates"
                     :selection-mode="selectionMode"
                     :disabled-date="disabledDate"
-                    :focused-date="focusedDate"
-
                     @on-pick="panelPickerHandlers"
                     @on-pick-click="handlePickClick"
                 ></component>
@@ -53,8 +51,6 @@
                     :format="format"
                     :time-disabled="timeDisabled"
                     :disabled-date="disabledDate"
-                    :focused-date="focusedDate"
-
                     v-bind="timePickerOptions"
                     @on-pick="handlePick"
                     @on-pick-click="handlePickClick"
@@ -154,6 +150,7 @@
             },
             currentView (currentView) {
                 this.$emit('on-selection-mode-change', currentView);
+                this.pickertable = this.getTableType(currentView);
 
                 if (this.currentView === 'time') {
                     this.$nextTick(() => {
@@ -165,13 +162,6 @@
             selectionMode(type){
                 this.currentView = type;
                 this.pickerTable = this.getTableType(type);
-            },
-            focusedDate(date){
-                const isDifferentYear = date.getFullYear() !== this.panelDate.getFullYear();
-                const isDifferentMonth = isDifferentYear || date.getMonth() !== this.panelDate.getMonth();
-                if (isDifferentYear || isDifferentMonth){
-                    this.panelDate = date;
-                }
             }
         },
         methods: {

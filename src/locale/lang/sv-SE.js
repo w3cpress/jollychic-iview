@@ -6,7 +6,7 @@ const lang = {
         select: {
             placeholder: 'Välj',
             noMatch: 'Ingen träff',
-            loading: 'Laddar'
+            loading: 'Ladar'
         },
         table: {
             noDataText: 'Ingen data',

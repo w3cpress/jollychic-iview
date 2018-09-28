@@ -67,7 +67,7 @@
                 this.childrens = findComponentsDownward(this, 'Radio');
                 if (this.childrens) {
                     this.childrens.forEach(child => {
-                        child.currentValue = this.currentValue === child.label;
+                        child.currentValue = this.value === child.label;
                         child.group = true;
                     });
                 }
@@ -82,10 +82,8 @@
         },
         watch: {
             value () {
-                if(this.currentValue !== this.value){
-                    this.currentValue = this.value;
-                    this.updateValue();
-                }
+                this.currentValue = this.value;
+                this.updateValue();
             }
         }
     };

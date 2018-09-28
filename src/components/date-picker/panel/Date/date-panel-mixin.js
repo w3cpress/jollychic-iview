@@ -46,10 +46,6 @@ export default {
         pickerType: {
             type: String,
             require: true
-        },
-        focusedDate: {
-            type: Date,
-            required: true,
         }
     },
     computed: {

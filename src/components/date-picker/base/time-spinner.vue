@@ -22,10 +22,8 @@
     import { deepCopy, scrollTop, firstUpperCase } from '../../../utils/assist';
 
     const prefixCls = 'ivu-time-picker-cells';
-    const timeParts = ['hours', 'minutes', 'seconds'];
 
     export default {
-        name: 'TimeSpinner',
         mixins: [Options],
         props: {
             hours: {
@@ -53,9 +51,7 @@
             return {
                 spinerSteps: [1, 1, 1].map((one, i) => Math.abs(this.steps[i]) || one),
                 prefixCls: prefixCls,
-                compiled: false,
-                focusedColumn: -1, // which column inside the picker
-                focusedTime: [0, 0, 0] // the values array into [hh, mm, ss]
+                compiled: false
             };
         },
         computed: {
@@ -70,7 +66,6 @@
             hoursList () {
                 let hours = [];
                 const step = this.spinerSteps[0];
-                const focusedHour = this.focusedColumn === 0 && this.focusedTime[0];
                 const hour_tmpl = {
                     text: 0,
                     selected: false,
@@ -81,7 +76,6 @@
                 for (let i = 0; i < 24; i += step) {
                     const hour = deepCopy(hour_tmpl);
                     hour.text = i;
-                    hour.focused = i === focusedHour;
 
                     if (this.disabledHours.length && this.disabledHours.indexOf(i) > -1) {
                         hour.disabled = true;
@@ -96,7 +90,6 @@
             minutesList () {
                 let minutes = [];
                 const step = this.spinerSteps[1];
-                const focusedMinute = this.focusedColumn === 1 && this.focusedTime[1];
                 const minute_tmpl = {
                     text: 0,
                     selected: false,
@@ -107,7 +100,6 @@
                 for (let i = 0; i < 60; i += step) {
                     const minute = deepCopy(minute_tmpl);
                     minute.text = i;
-                    minute.focused = i === focusedMinute;
 
                     if (this.disabledMinutes.length && this.disabledMinutes.indexOf(i) > -1) {
                         minute.disabled = true;
@@ -121,7 +113,6 @@
             secondsList () {
                 let seconds = [];
                 const step = this.spinerSteps[2];
-                const focusedMinute = this.focusedColumn === 2 && this.focusedTime[2];
                 const second_tmpl = {
                     text: 0,
                     selected: false,
@@ -132,7 +123,6 @@
                 for (let i = 0; i < 60; i += step) {
                     const second = deepCopy(second_tmpl);
                     second.text = i;
-                    second.focused = i === focusedMinute;
 
                     if (this.disabledSeconds.length && this.disabledSeconds.indexOf(i) > -1) {
                         second.disabled = true;
@@ -151,32 +141,15 @@
                     `${prefixCls}-cell`,
                     {
                         [`${prefixCls}-cell-selected`]: cell.selected,
-                        [`${prefixCls}-cell-focused`]: cell.focused,
                         [`${prefixCls}-cell-disabled`]: cell.disabled
-
                     }
                 ];
             },
-            chooseValue(values){
-                const changes = timeParts.reduce((obj, part, i) => {
-                    const value = values[i];
-                    if (this[part] ===  value) return obj;
-                    return {
-                        ...obj,
-                        [part]: value
-                    };
-                }, {});
-                if (Object.keys(changes).length > 0) {
-                    this.emitChange(changes);
-                }
-            },
             handleClick (type, cell) {
                 if (cell.disabled) return;
-                const data = {[type]: cell.text};
-                this.emitChange(data);
-            },
-            emitChange(changes){
-                this.$emit('on-change', changes);
+                const data = {};
+                data[type] = cell.text;
+                this.$emit('on-change', data);
                 this.$emit('on-pick-click');
             },
             scroll (type, index) {
@@ -195,19 +168,15 @@
                 return index;
             },
             updateScroll () {
+                const times = ['hours', 'minutes', 'seconds'];
                 this.$nextTick(() => {
-                    timeParts.forEach(type => {
+                    times.forEach(type => {
                         this.$refs[type].scrollTop = 24 * this[`${type}List`].findIndex(obj => obj.text == this[type]);
                     });
                 });
             },
             formatTime (text) {
                 return text < 10 ? '0' + text : text;
-            },
-            updateFocusedTime(col, time) {
-                this.focusedColumn = col;
-                this.focusedTime = time.slice();
-
             }
         },
         watch: {
@@ -222,13 +191,6 @@
             seconds (val) {
                 if (!this.compiled) return;
                 this.scroll('seconds', this.secondsList.findIndex(obj => obj.text == val));
-            },
-            focusedTime(updated, old){
-                timeParts.forEach((part, i) => {
-                    if (updated[i] === old[i] || typeof updated[i] === 'undefined') return;
-                    const valueIndex = this[`${part}List`].findIndex(obj => obj.text === updated[i]);
-                    this.scroll(part, valueIndex);
-                });
             }
         },
         mounted () {
