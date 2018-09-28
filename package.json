@@ -1,6 +1,6 @@
 {
   "name": "jollychic-iview",
-  "version": "1.2.0",
+  "version": "1.2.1",
   "description": "async iview@2.13.1",
   "scripts": {
     "test": "test"
